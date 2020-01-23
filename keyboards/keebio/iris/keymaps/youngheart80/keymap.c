@@ -16,6 +16,7 @@ enum custom_keycodes {
   ADJUST,
 };
 
+// Remove all of this and put into Userspace as some future date
 #define KC_ KC_TRNS
 #define _______ KC_TRNS
 #define KC_NONE KC_NO
@@ -67,6 +68,7 @@ enum custom_keycodes {
 #define KC_WINM LGUI(KC_UP) //Maximize Window
 #define KC_WINL LGUI(KC_LEFT) //Snap window left
 #define KC_WINR LGUI(KC_RGHT) //Snap window right
+// end Remove
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -176,22 +178,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 void matrix_init_user(void) {
   rgblight_enable();
-  rgblight_sethsv_orange();
+  rgblight_setrgb (RGB_GOLDENROD);
 };
 
-uint32_t layer_state_set_user(uint32_t state) {
-    switch (biton32(state)) {
+//uint32_t layer_state_set_user(uint32_t state) {
+//    switch (biton32(state)) {
+//    case _NAV:
+//        rgblight_sethsv_red();
+//        break;
+//    case _NUMPAD:
+//        rgblight_sethsv_green();
+//        break;
+//    case _ADJUST:
+//        rgblight_sethsv_blue();
+//        break;
+//    default: //  for any other layers, or the default layer
+//        rgblight_sethsv_orange();
+//        break;
+//    }
+//  return state;
+//}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    switch (get_highest_layer(state)) {
     case _NAV:
-        rgblight_sethsv_red();
+        rgblight_setrgb (RGB_RED);
         break;
     case _NUMPAD:
-        rgblight_sethsv_green();
+        rgblight_setrgb (RGB_GREEN);
         break;
     case _ADJUST:
-        rgblight_sethsv_blue();
+        rgblight_setrgb (RGB_BLUE);
         break;
     default: //  for any other layers, or the default layer
-        rgblight_sethsv_orange();
+        rgblight_setrgb (RGB_GOLDENROD);
         break;
     }
   return state;
