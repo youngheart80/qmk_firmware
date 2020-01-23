@@ -1,4 +1,4 @@
-/* Copyright 2019 Thomas Baart <thomas@splitkb.com>
+/* Copyright 2020 Grant Gardner youngheart80@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,3 +30,12 @@
 // If you are using an Elite C rev3 on the slave side, uncomment the lines below:
 // #define SPLIT_USB_DETECT
 // #define NO_USB_STARTUP_CHECK
+
+#define TAPPING_TERM 150
+#define TAPPING_TOGGLE 3  //Tap to toggle for layers
+
+#define LEADER_PER_KEY_TIMING  150  //Leader key timeout per key
+//#define LEADER_TIMEOUT 300 			//Leader key timeout 
+
+#define IGNORE_MOD_TAP_INTERRUPT
+#define PREVENT_STUCK_MODIFIERS
