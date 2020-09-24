@@ -115,7 +115,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * | L Shft | LCTL | Cut  | Copy |Paste |ShfTab|      |      |  | COLM |      | PGDN | Tab  | None |ShfTab| RCTL | RSFT   |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      | Bspc | Del  |  |      | Space| Enter|      |      |
+ *                        |WindL |WindR |      | Bspc | Del  |  |      | Space| Enter|      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
@@ -123,7 +123,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_CAD , _______, KC_SLCK, KC_PSCR, KC_PAUS, _______,                                     KC_PGUP, KC_HOME, KC_UP  , KC_END , KC_INS , _______,
       KC_TASK, _______, KC_LSFT, KC_LALT, KC_LCTL, KC_TAB ,                                     KC_NO  , KC_LEFT, KC_DOWN, KC_RGHT, KC_NO  , _______,
       KC_LSFT, KC_LCTL, KC_CUT , KC_COPY, KC_PST , KC_STAB, _______, _______, KC_COLM, _______, KC_PGDN, KC_TAB , KC_NO  , KC_STAB, KC_RCTL, KC_RSFT,
-                                 _______, _______, _______, KC_BSPC, KC_DEL , _______, KC_SPC , KC_ENT , _______, _______
+                                 KC_WINL, KC_WINR, _______, KC_BSPC, KC_DEL , _______, KC_SPC , KC_ENT , _______, _______
     ),
 /*
  * Numpad Layer: Number keys and Numpad
