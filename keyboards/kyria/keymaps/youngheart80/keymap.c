@@ -219,26 +219,41 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 //New Lighting Layers stuff 2021 working out
-// Light LEDs 6 to 9 and 12 to 15 red when caps lock is active. Hard to ignore!
+// Light LEDs 0 to + and 10 to 14 cyan when caps lock is active. Hard to ignore!
 const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-    {1, 4, HSV_RED},       // Light 4 LEDs, starting with LED 1
-    {11, 4, HSV_RED}       // Light 4 LEDs, starting with LED 11
+    {0, 4, HSV_CYAN},       // Light 4 LEDs, starting with LED 1
+    {10, 4, HSV_CYAN}       // Light 4 LEDs, starting with LED 11
 );
-// Light LEDs 9 & 10 in cyan when keyboard layer 1 is active
+// Light LEDs 0 to 2 in red when keyboard layer 1 is active
 const rgblight_segment_t PROGMEM my_layer1_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-    {1, 2, HSV_CYAN}
+    {0, 3, HSV_RED},
+	{10, 3, HSV_RED}
 );
-// Light LEDs 11 & 12 in purple when keyboard layer 2 is active
+// Light LEDs 10 to 12 in green when keyboard layer 2 is active
 const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-    {11, 2, HSV_PURPLE}
+    {0, 3, HSV_GREEN},
+	{10, 3, HSV_GREEN}
 );
 
+// Light LEDs 10 to 12 in purple when keyboard layer 3 is active
+const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 3, HSV_PURPLE},
+	{10, 3, HSV_PURPLE}
+);
+
+// Light LEDs 0 to 2 in blue when keyboard layer 4 is active
+const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 3, HSV_BLUE},
+	{10, 3, HSV_BLUE}
+);
 
 // Now define the array of layers. Later layers take precedence
 const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
     my_capslock_layer,
     my_layer1_layer,    // Overrides caps lock layer
-    my_layer2_layer     // Overrides other layers
+    my_layer2_layer,    // Overrides other layers
+	my_layer3_layer,
+	my_layer4_layer
 );
 
 void keyboard_post_init_user(void) {
@@ -253,6 +268,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     // Both layers will light up if both kb layers are active
     rgblight_set_layer_state(1, layer_state_cmp(state, 1));
     rgblight_set_layer_state(2, layer_state_cmp(state, 2));
+	rgblight_set_layer_state(3, layer_state_cmp(state, 3));
+    rgblight_set_layer_state(4, layer_state_cmp(state, 4));
     return state;
 }
 
