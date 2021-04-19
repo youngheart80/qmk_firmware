@@ -23,10 +23,13 @@
 #ifdef RGBLIGHT_ENABLE
 //#define RGBLIGHT_ANIMATIONS
   #define RGBLIGHT_LAYERS
+  #define RGBLIGHT_SPLIT 10
+  #define RGBLIGHT_LAYERS_OVERRIDE_RGB_OFF
+  #define RGBLIGHT_DEFAULT_HUE 30
   #define RGBLIGHT_SLEEP
-  #define RGBLIGHT_HUE_STEP 8
-  #define RGBLIGHT_SAT_STEP 8
-  #define RGBLIGHT_VAL_STEP 8
+  #define RGBLIGHT_HUE_STEP 10
+  #define RGBLIGHT_SAT_STEP 17
+  #define RGBLIGHT_VAL_STEP 17
 #endif
 
 // If you are using an Elite C rev3 on the slave side, uncomment the lines below:
