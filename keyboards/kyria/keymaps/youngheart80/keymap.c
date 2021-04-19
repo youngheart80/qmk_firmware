@@ -46,14 +46,14 @@ enum layers {
 #define KC_DBUG DEBUG
 
 /* RGB Underglow control definitions */
-//#define KC_RTOG RGB_TOG
-//#define KC_RMOD RGB_MOD
-//#define KC_RHUI RGB_HUI
-//#define KC_RHUD RGB_HUD
-//#define KC_RSAI RGB_SAI
-//#define KC_RSAD RGB_SAD
-//#define KC_RVAI RGB_VAI
-//#define KC_RVAD RGB_VAD
+#define KC_RTOG RGB_TOG
+#define KC_RMOD RGB_MOD
+#define KC_RHUI RGB_HUI
+#define KC_RHUD RGB_HUD
+#define KC_RSAI RGB_SAI
+#define KC_RSAD RGB_SAD
+#define KC_RVAI RGB_VAI
+#define KC_RVAD RGB_VAD
 
 
 /* My personal definitions */
@@ -103,7 +103,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_ESCH, KC_Q   , KC_W   , KC_F   , KC_P   , KC_G   ,                                     KC_J   , KC_L   , KC_U   , KC_Y   , KC_SCLN, KC_MINS,
       KC_TAB , KC_A   , KC_R   , KC_S   , KC_T   , KC_D   ,                                     KC_H   , KC_N   , KC_E   , KC_I   , KC_O   , KC_QUOT,
       KC_LSPO, KC_ZC  , KC_XA  , KC_C   , KC_V   , KC_B   , KC_UNDO, KC_CAPM, KC_ADJ , KC_LEAD, KC_K   , KC_M   , KC_COMM, KC_DOT , KC_SLSC, KC_RSPC,
-                                 KC_NAV , KC_SYMB, KC_NUM , KC_BSPC, KC_DEL , KC_NAV , KC_SPC , KC_ENT , KC_SYMB, KC_LOCK
+                                 KC_LGUI, KC_SYMB, KC_NUM , KC_BSPC, KC_DEL , KC_NAV , KC_SPC , KC_ENT , KC_SYMB, KC_LOCK
     ),
 /*
  * Navigation Layer: NAV
@@ -149,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Layer: Symbols
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |  !   |  @   |  #   |  $   |  %   |                              |      |      |      |      |      |  | \   |
+ * |        |  !   |  @   |  #   |  $   |  %   |                              |      |      |      |      |      |  \ |   |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |  ^   |  &   |  *   |  |   |  `   |                              |   +  |  -   |  /   |  *   |  =   |  ' "   |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
@@ -218,7 +218,53 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //};
 
 
-layer_state_t layer_state_set_user(layer_state_t state) {	
+//New Lighting Layers stuff 2021 working out
+// Light LEDs 6 to 9 and 12 to 15 red when caps lock is active. Hard to ignore!
+const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {1, 4, HSV_RED},       // Light 4 LEDs, starting with LED 1
+    {11, 4, HSV_RED}       // Light 4 LEDs, starting with LED 11
+);
+// Light LEDs 9 & 10 in cyan when keyboard layer 1 is active
+const rgblight_segment_t PROGMEM my_layer1_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {1, 2, HSV_CYAN}
+);
+// Light LEDs 11 & 12 in purple when keyboard layer 2 is active
+const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {11, 2, HSV_PURPLE}
+);
+
+
+// Now define the array of layers. Later layers take precedence
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+    my_capslock_layer,
+    my_layer1_layer,    // Overrides caps lock layer
+    my_layer2_layer     // Overrides other layers
+);
+
+void keyboard_post_init_user(void) {
+    // Enable the LED layers
+    rgblight_layers = my_rgb_layers;
+}
+
+
+
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    // Both layers will light up if both kb layers are active
+    rgblight_set_layer_state(1, layer_state_cmp(state, 1));
+    rgblight_set_layer_state(2, layer_state_cmp(state, 2));
+    return state;
+}
+
+bool led_update_user(led_t led_state) {
+    rgblight_set_layer_state(0, led_state.caps_lock);
+    return true;
+}
+
+
+
+//2020 Version
+/*layer_state_t layer_state_set_user(layer_state_t state) {	
 	switch (get_highest_layer(state)) {
     case _NAV:
         rgblight_sethsv_noeeprom(HSV_RED);
@@ -239,3 +285,4 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return state;
  
 }
+*/
